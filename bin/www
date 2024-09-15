@@ -8,8 +8,7 @@ const dotenv = require('dotenv').config();
 const CONFIG = require('../config');
 
 if (dotenv.error) {
-  console.error('Error loading .env file:', dotenv.error);
-  process.exit(1); // Exit the process with an error code
+  console.error('Error loading .env file with dotenv:', dotenv.error);
 }
 
 const app = require('../app');
