@@ -13,7 +13,6 @@ if (dotenv.error) {
 }
 
 const app = require('../app');
-const debug = require('debug')('scrapr:server');
 const http = require('http');
 
 /**
@@ -94,5 +93,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  console.info('Listening on ' + bind);
 }
