@@ -4,15 +4,23 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('scrapr:server');
-var http = require('http');
+const dotenv = require('dotenv').config();
+const CONFIG = require('../config');
+
+if (dotenv.error) {
+  console.error('Error loading .env file:', dotenv.error);
+  process.exit(1); // Exit the process with an error code
+}
+
+const app = require('../app');
+const debug = require('debug')('scrapr:server');
+const http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(CONFIG.PORT);
 app.set('port', port);
 
 /**

@@ -6,6 +6,9 @@ const pdf = require('pdf-parse')
 const NodeCache = require('node-cache')
 const axios = require('axios')
 const {v4: uuidv4} = require('uuid');
+const CONFIG = require('../config');
+const backendURL = `${CONFIG.PROTOCOL}://${CONFIG.HOST}:${CONFIG.PORT}`;
+const PDF_URL = `${backendURL}${process.env.PDF_URL}`
 
 const router = express.Router()
 const scrapePdfCache = new NodeCache()
@@ -60,12 +63,11 @@ function joinDataChunks (response) {
 }
 
 router.post('/pdf', (req, res) => {
-    const {url} = req.body;
     const cachedPdf = scrapePdfCache.get('pdf')
 
     if (cachedPdf == null) {
         try {
-            axios.get(url, {responseType: 'stream'})
+            axios.get(PDF_URL, {responseType: 'stream'})
                 .then(joinDataChunks)
                 .then(readPdfBuffer)
                 .then(createPdfResponse)
